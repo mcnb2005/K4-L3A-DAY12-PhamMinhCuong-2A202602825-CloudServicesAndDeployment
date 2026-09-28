@@ -10,17 +10,17 @@
 
 | Mục | Nội dung |
 |-----|----------|
-| Họ và tên | (điền họ tên) |
-| Mã học viên | (điền mã học viên) |
-| Repo | (điền link repo K4-L3A-DAY12-HoVaTen-MSSV-CloudServicesAndDeployment) |
+| Họ và tên | Phạm Minh Cương |
+| Mã học viên | 2A202602825 |
+| Repo | `K4-L3A-DAY12-PhamMinhCuong-2A202602825-CloudServicesAndDeployment` — chưa tạo remote cá nhân |
 
 ## Service
 
 | Mục | Nội dung |
 |-----|----------|
-| Public URL | https://TODO-thay-bang-url-that.up.railway.app |
-| Platform | Railway / Render / Cloud Run — (điền platform bạn dùng) |
-| Ngày deploy | (điền ngày) |
+| Public URL | Không có — đang dùng local fallback tại `http://localhost:18000` |
+| Platform | Docker Compose local fallback; dự kiến dùng Railway khi có tài khoản |
+| Ngày deploy | 2026-09-28 |
 
 ## Biến Môi Trường Đã Set Trên Cloud
 
@@ -30,7 +30,7 @@ Ghi tên biến và **nguồn giá trị**, không ghi giá trị:
 |------|--------|---------|
 | `PORT` | ✅ | platform tự gán |
 | `AGENT_API_KEY` | ✅ | đặt trong dashboard, không nằm trong repo |
-| `REDIS_URL` | ✅ | (điền: Redis add-on của platform / Upstash / ...) |
+| `REDIS_URL` | ✅ | Redis container trong Docker Compose |
 | `RATE_LIMIT_PER_MINUTE` | ✅ | 10 |
 | `MONTHLY_BUDGET_USD` | ✅ | 10.0 |
 | `LOG_LEVEL` | ✅ | INFO |
@@ -73,15 +73,31 @@ done; echo
 Dán output của các lệnh trên vào đây:
 
 ```
-(điền output)
+GET /health
+HTTP 200
+{"status":"ok","service":"day12-agent","version":"1.0.0"}
+
+GET /ready
+HTTP 200
+{"status":"ready","redis":true}
+
+POST /ask không có X-API-Key
+HTTP 401
+{"detail":"invalid or missing API key"}
+
+POST /ask có X-API-Key
+HTTP 200; response có answer, user_id, history_length, cost_usd và tokens.
+
+15 request liên tiếp với cùng X-User-Id
+200 200 200 200 200 200 200 200 200 200 429 429 429 429 429
 ```
 
 ## Ảnh Chụp Màn Hình
 
 Đặt ảnh trong thư mục `screenshots/`:
 
-- `screenshots/dashboard.png` — trang quản lý service trên platform
-- `screenshots/health.png` — kết quả gọi `/health` từ trình duyệt hoặc curl
+- `screenshots/health.png` — kết quả thật khi gọi `/health` từ trình duyệt
+- Chưa có `dashboard.png` vì bài hiện chạy theo phương án local fallback.
 
 ---
 
@@ -97,5 +113,8 @@ Không đăng ký được tài khoản cloud? Vẫn nộp được bài, nhưng
 5. Ghi rõ lý do không deploy được vào phần dưới đây:
 
 ```
-(điền lý do nếu dùng phương án dự phòng, ngược lại xóa mục này)
+Chưa có tài khoản và thông tin xác thực Railway/Render trong workspace, nên
+không thể tự tạo dịch vụ cloud công khai một cách an toàn. Stack local đã được
+build và kiểm tra bằng Docker Compose; agent chạy ở cổng 18000 vì cổng 8000
+đang được một dự án khác sử dụng.
 ```
