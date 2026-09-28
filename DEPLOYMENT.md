@@ -18,8 +18,8 @@
 
 | Mục | Nội dung |
 |-----|----------|
-| Public URL | Không có — đang dùng local fallback tại `http://localhost:18000` |
-| Platform | Docker Compose local fallback; dự kiến dùng Railway khi có tài khoản |
+| Public URL | https://day12-agent-sd2v.onrender.com |
+| Platform | Render Blueprint — Web Service (Docker) + Render Key Value (Valkey/Redis) |
 | Ngày deploy | 2026-09-28 |
 
 ## Biến Môi Trường Đã Set Trên Cloud
@@ -30,7 +30,7 @@ Ghi tên biến và **nguồn giá trị**, không ghi giá trị:
 |------|--------|---------|
 | `PORT` | ✅ | platform tự gán |
 | `AGENT_API_KEY` | ✅ | đặt trong dashboard, không nằm trong repo |
-| `REDIS_URL` | ✅ | Redis container trong Docker Compose |
+| `REDIS_URL` | ✅ | Render tự lấy internal connection string từ `day12-redis` |
 | `RATE_LIMIT_PER_MINUTE` | ✅ | 10 |
 | `MONTHLY_BUDGET_USD` | ✅ | 10.0 |
 | `LOG_LEVEL` | ✅ | INFO |
@@ -70,7 +70,7 @@ done; echo
 
 ## Kết Quả Chạy Thật
 
-Dán output của các lệnh trên vào đây:
+Dưới đây là kết quả kiểm tra service công khai sau khi deploy:
 
 ```
 GET /health
@@ -97,11 +97,11 @@ HTTP 200; response có answer, user_id, history_length, cost_usd và tokens.
 Đặt ảnh trong thư mục `screenshots/`:
 
 - `screenshots/health.png` — kết quả thật khi gọi `/health` từ trình duyệt
-- Chưa có `dashboard.png` vì bài hiện chạy theo phương án local fallback.
+- `screenshots/dashboard.png` — Render báo deploy thành công.
 
 ---
 
-## Nếu Dùng Phương Án Dự Phòng
+## Phương Án Dự Phòng (Không Sử Dụng)
 
 Không đăng ký được tài khoản cloud? Vẫn nộp được bài, nhưng CP5 tối đa 60% điểm:
 
@@ -112,9 +112,4 @@ Không đăng ký được tài khoản cloud? Vẫn nộp được bài, nhưng
    `http://localhost:8000`
 5. Ghi rõ lý do không deploy được vào phần dưới đây:
 
-```
-Chưa có tài khoản và thông tin xác thực Railway/Render trong workspace, nên
-không thể tự tạo dịch vụ cloud công khai một cách an toàn. Stack local đã được
-build và kiểm tra bằng Docker Compose; agent chạy ở cổng 18000 vì cổng 8000
-đang được một dự án khác sử dụng.
-```
+Service hiện đã được deploy công khai trên Render nên không dùng local fallback.
