@@ -12,7 +12,7 @@
 |-----|----------|
 | Họ và tên | Phạm Minh Cương |
 | Mã học viên | 2A202602825 |
-| Repo | `K4-L3A-DAY12-PhamMinhCuong-2A202602825-CloudServicesAndDeployment` — chưa tạo remote cá nhân |
+| Repo | https://github.com/mcnb2005/K4-L3A-DAY12-PhamMinhCuong-2A202602825-CloudServicesAndDeployment |
 
 ## Service
 
